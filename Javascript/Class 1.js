@@ -38,7 +38,7 @@ console.error("Hello")
 
 
 
-const a = 1   // Declaration
+// const a = 1   // Declaration
 
 // const a   // Redeclare
 
@@ -67,8 +67,6 @@ const a = 1   // Declaration
 // 6. Array        [87,48,34,24,98]      
 // 7. Object {}    { name:"Waleed" , fatherName:"Imran" , contact:483838438383, isMarried: false }
 // 8. Function     function , functionName()
-
-
 
 
 
