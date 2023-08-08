@@ -94,6 +94,6 @@ var c = 4.8
 
 
 
-for(var i = 1 ; i<= 10 ; i--){
-    console.log(i)
-}
+// for(var i = 1 ; i<= 10 ; i--){
+//     console.log(i)
+// }
