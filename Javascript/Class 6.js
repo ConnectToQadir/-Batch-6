@@ -42,12 +42,14 @@
 
 
 
-var pass = document.getElementById('password')
+// var pass = document.getElementById('password')
 
-function showHidePassword(){
-    if(pass.type == "password"){
-        pass.type = "text"
-    }else{
-        pass.type = "password"
-    }
-}
+// function showHidePassword(){
+//     if(pass.type == "password"){
+//         pass.type = "text"
+//     }else{
+//         pass.type = "password"
+//     }
+// }
+
+
