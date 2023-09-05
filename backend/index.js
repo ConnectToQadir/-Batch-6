@@ -1,41 +1,42 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
 
 
-app.set('view engine', 'ejs')
-
-app.get("/api/login", (req, res) => {
-    // Data stored in DB
-    var data = { username: "admin", password: "admin123" }
+app.use(express.static('public'))
+app.set('view engine','ejs')
 
 
-    if (req.query.username === data.username && req.query.password === data.password) {
-        res.redirect("/dashboard")
-    } else {
-        res.send("Invalid Username or Password!")
-    }
-})
+const coursesModel = mongoose.model("courses",new mongoose.Schema({
+    title:String,
+    description:String,
+    fee:Number,
+    rating:Number
+}))
 
-app.get('/login', (req, res) => {
-    res.render('login')
-})
 
-app.get('/', (req, res) => {
+app.get('/',(req,res)=>{
     res.render('home')
 })
 
-app.get('/dashboard', (req, res) => {
-    res.render('dashboard')
+
+app.get('/add-course',(req,res)=>{
+    res.render('addCourse')
+})
+
+
+app.get('/api/addCourse',async (req,res)=>{
+    await coursesModel.create(req.query)
+    res.send("Course Submitted Successfully!")
 })
 
 
 
-app.get('/print-req',(req,res)=>{
-    console.log(req)
-    res.send("Request print ho gayee hai console me ja k check kar le")
-})
+mongoose.connect("mongodb://127.0.0.1:27017/edify-college")
+.then(()=>console.log("Connected!"))
+.catch(()=>console.log("Not Connected!"))
 
 
-app.listen(3000, () => {
-    console.log("Backend is Ready...")
+app.listen(2500,()=>{
+    console.log("Server is Running on Port 2500")
 })
