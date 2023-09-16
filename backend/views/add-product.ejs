@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav>
+        <h2>Logo Here</h2>
+        <a href="/">Home</a>
+        <a href="/add-product">Add Product</a>
+        <a href="/products">Products</a>
+    </nav>
+
+
+    <input id="title" type="text" name="title" placeholder="title">
+    <input id="price" type="number" name="price" placeholder="price">
+    <input id="stock" type="number" name="stock" placeholder="stock">
+
+    <button onclick="addProduct()">Submit</button>
+
+
+
+    <script>
+
+        async function addProduct(){
+            var data = {
+                title:document.getElementById("title").value,
+                price:document.getElementById("price").value,
+                stock:document.getElementById("stock").value
+            }
+
+            console.log(data)
+
+            var res = await fetch('http://localhost:5000/api/products',{
+                method:"POST",
+                body:JSON.stringify(data),
+                headers:{"content-type":"application/json"}
+            })
+
+            res = await res.json()
+
+            if(res){
+                alert("Product Submitted Successfully!")
+                document.getElementById("title").value = ""
+                document.getElementById("price").value = ""
+                document.getElementById("stock").value = ""
+            }
+
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>

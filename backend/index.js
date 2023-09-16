@@ -9,13 +9,35 @@ const mongoose = require("mongoose")
 
 
 // Middleware
+app.set('view engine',"ejs")
 
 
 // Middleware to read json data from req
 app.use(express.json())
 
+// Middleware of Router
 app.use('/api/products',require('./routes/products'))
 app.use('/api/users',require('./routes/users'))
+
+
+
+
+
+
+app.get("/",(req,res)=>{
+    res.render("index")
+})
+
+
+app.get("/products",(req,res)=>{
+    res.render("products")
+})
+
+
+app.get("/add-product",(req,res)=>{
+    res.render("add-product")
+})
+
 
 
 

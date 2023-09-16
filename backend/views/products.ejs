@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav>
+        <h2>Logo Here</h2>
+        <a href="/">Home</a>
+        <a href="/add-product">Add Product</a>
+        <a href="/products">Products</a>
+    </nav>
+
+    <table border>
+        <thead>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+
+
+
+
+    <script>
+
+        async function getProdcuts() {
+            var products = await fetch('http://localhost:5000/api/products')
+            products = await products.json()
+
+            var tbody = document.getElementById('tbody')
+
+            products.map((v)=>{
+
+                var title = document.createElement('td')
+                title.innerText = v.title
+
+                var price = document.createElement('td')
+                price.innerText = v.price
+
+                var stock = document.createElement('td')
+                stock.innerText = v.stock
+
+                var tr = document.createElement("tr")
+                tr.appendChild(title)
+                tr.appendChild(price)
+                tr.appendChild(stock)
+                tbody.appendChild(tr)
+
+            })
+        }
+
+        getProdcuts()
+
+    </script>
+
+
+
+</body>
+
+</html>
