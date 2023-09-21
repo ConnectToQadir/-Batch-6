@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -21,6 +22,7 @@
             <th>Title</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Actions</th>
         </thead>
         <tbody id="tbody">
         </tbody>
@@ -28,8 +30,23 @@
 
 
 
+    <br><br><br>
+
+
+    <input id="title" type="text" name="title" placeholder="title">
+    <input id="price" type="number" name="price" placeholder="price">
+    <input id="stock" type="number" name="stock" placeholder="stock">
+
+    <button onclick="updateProduct()">Update</button>
+
+
+
+
 
     <script>
+
+
+        var productID = ""
 
         async function getProdcuts() {
             var products = await fetch('http://localhost:5000/api/products')
@@ -37,7 +54,7 @@
 
             var tbody = document.getElementById('tbody')
 
-            products.map((v)=>{
+            products.map((v) => {
 
                 var title = document.createElement('td')
                 title.innerText = v.title
@@ -48,16 +65,81 @@
                 var stock = document.createElement('td')
                 stock.innerText = v.stock
 
+
+                var actions = document.createElement('td')
+                var delIcon = document.createElement('i')
+                delIcon.classList.add("bx")
+                delIcon.classList.add("bx-trash")
+
+
+                var editIcon = document.createElement("i")
+                editIcon.classList.add("bx")
+                editIcon.classList.add("bx-edit")
+
+                actions.appendChild(delIcon)
+                actions.appendChild(editIcon)
+
+
+                delIcon.addEventListener("click", async () => {
+
+                    if (prompt(`To delete this product type : ${v.title}`) === v.title) {
+                        await fetch(`/api/products/${v._id}`, {
+                            method: "DELETE",
+                        })
+                        window.location.reload()
+                    }
+
+                })
+                editIcon.addEventListener('click', () => {
+                    document.getElementById("title").value = v.title
+                    document.getElementById("price").value = v.price
+                    document.getElementById("stock").value = v.stock
+
+                    productID = v._id
+                    
+                })
+
                 var tr = document.createElement("tr")
                 tr.appendChild(title)
                 tr.appendChild(price)
                 tr.appendChild(stock)
+                tr.appendChild(actions)
                 tbody.appendChild(tr)
 
             })
         }
-
         getProdcuts()
+
+
+
+
+
+        async function updateProduct() {
+
+
+
+            var data = {
+                title: document.getElementById("title").value,
+                price: document.getElementById("price").value,
+                stock: document.getElementById("stock").value
+            }
+
+
+            var res = await fetch(`/api/products/${productID}`, {
+                method: "PUT",
+                body: JSON.stringify(data),
+                headers: { "content-type": "application/json" }
+            })
+
+            res = await res.json()
+
+
+            if (res.success) {
+                alert(res.message)
+                window.location.reload()
+            }
+
+        }
 
     </script>
 

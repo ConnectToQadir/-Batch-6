@@ -42,7 +42,10 @@ router.delete('/:id',async(req,res)=>{
 router.put('/:id',async(req,res)=>{
     try {
         var product = await ProductsModel.findByIdAndUpdate(req.params.id,{$set:req.body})
-        res.send("Updated!")
+        res.json({
+            success:true,
+            message:"Product Updated!"
+        })
     } catch (error) {
         res.send(error.message)
     }
