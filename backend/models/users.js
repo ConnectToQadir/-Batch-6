@@ -32,6 +32,11 @@ var usersSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    isAdmin:{
+        type:Boolean,
+        default:false,
+        required:true
+    }
 },{timestamps:true})
 
 module.exports = mongoose.model('users',usersSchema)

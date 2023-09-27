@@ -10,7 +10,10 @@ router.post("/register",async(req,res)=>{
         var hashedPassword = await bcrypt.hash(req.body.password,10)
 
         var user = await UsersModel.create({...req.body,password:hashedPassword})
-        res.status(201).json(user)
+        res.status(201).json({
+            success:true,
+            message:user
+        })
 
 
     } catch (error) {
@@ -68,7 +71,7 @@ router.post("/login",async(req,res)=>{
         }
 
         // Generate Token for Session Purpose
-        var accessToken = jwt.sign({id:foundUser._id},"ajsdkfj@*^@&132u72",{expiresIn:"30s"})
+        var accessToken = jwt.sign({id:foundUser._id},"ajsdkfj@*^@&132u72",{expiresIn:"15s"})
 
         // Store token in response cookies
         res.cookie("token",accessToken,{secure:true,httpOnly:true})

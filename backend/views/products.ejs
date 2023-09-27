@@ -10,12 +10,10 @@
 
 <body>
 
-    <nav>
-        <h2>Logo Here</h2>
-        <a href="/">Home</a>
-        <a href="/add-product">Add Product</a>
-        <a href="/products">Products</a>
-    </nav>
+    <%- include('./components/navbar.ejs') %>
+
+
+    <!-- <%- user %> -->
 
     <table border>
         <thead>
@@ -27,6 +25,9 @@
         <tbody id="tbody">
         </tbody>
     </table>
+
+
+
 
 
 
@@ -42,8 +43,12 @@
 
 
 
+    
 
     <script>
+
+        var isAdmin = "<%=user.isAdmin%>"
+
 
 
         var productID = ""
@@ -76,8 +81,11 @@
                 editIcon.classList.add("bx")
                 editIcon.classList.add("bx-edit")
 
-                actions.appendChild(delIcon)
-                actions.appendChild(editIcon)
+                
+                if(isAdmin == "true"){
+                    actions.appendChild(delIcon)
+                    actions.appendChild(editIcon)
+                }
 
 
                 delIcon.addEventListener("click", async () => {
@@ -90,6 +98,9 @@
                     }
 
                 })
+
+
+                
                 editIcon.addEventListener('click', () => {
                     document.getElementById("title").value = v.title
                     document.getElementById("price").value = v.price
